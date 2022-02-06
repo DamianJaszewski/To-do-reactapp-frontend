@@ -1,0 +1,33 @@
+.App {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+}
+  
+.no-outline:focus {
+    outline: none;
+}
+
+::placeholder{
+    color: black;
+}
+
+
+input, button{
+    margin: 500px;
+    outline: blueviolet;
+}
+
+.navbar{
+    background-color: lightcoral;
+}
+
