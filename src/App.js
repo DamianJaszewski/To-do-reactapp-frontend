@@ -15,47 +15,50 @@ function GetDay(props){
 
   switch(currentDate.getDay()){
     case 1:
-      return <h1>Poniedziałek</h1>
+      return <legend>Poniedziałek</legend>
     case 2:
-      return <h1>Wtorek</h1>
+      return <legend>Wtorek</legend>
     case 3:
-      return <h1>Środa</h1>
+      return <legend>Środa</legend>
     case 4:
-      return <h1>Czwartek</h1>
+      return <legend>Czwartek</legend>
     case 5:
-      return <h1>Piątek</h1>
+      return <legend>Piątek</legend>
     case 6:
-      return <h1>Sobota</h1>
+      return <legend>Sobota</legend>
     case 0:
-      return <h1>Niedziela</h1>
+      return <legend>Niedziela</legend>
     default:
-      return <h1>{currentDate.getDate()}</h1>
+      return <legend>{currentDate.getDate()}</legend>
   } 
 }
 
 function App(){
 
   const currentDate = new Date();
-
+  const todayDate = new Date();
   const[listOfTodo, setListOfTodo] = useState([])
   const[filteredTodo,setFilteredTodo] = useState(listOfTodo);
 
   useEffect(() => {
     Axios.get("http://localhost:3000/zadania")
     .then((res) => {
-      setListOfTodo(res.data.info)
+      setListOfTodo(res.data.info);
       setFilteredTodo(res.data.info);
     })
   }, []);
 
   //const [filteredData,setFilteredData] = useState(allData);
+  //{(new Date(todo.date)).getDate()}</div>
+  //{todayDate.getDate() + "." + todayDate.getMonth() + "." + todayDate.getFullYear()}</div>
 
   const handleSearch = (event) => {
-    let value = event.target.value;
+    let value = event;
     let result = [];
-    console.log(value);
+    console.log(event);
     result = listOfTodo.filter((data)=>{
-      return data.title.search(value) != -1;
+      console.log((new Date(data.date)).toLocaleDateString());
+      return (new Date(data.date)).toLocaleDateString().search(value) != -1;
     })
     setFilteredTodo(result);
   }
@@ -87,26 +90,26 @@ function App(){
 
   return(
     <div className="App">
-      <div class="row">
+      <div class="row mt-5">
         <div class="col">
         <form>
           <legend>Dodaj zadanie</legend>
-            <div class="d-grid gap-3">
+            <div class="d-grid gap-3 mt-5">
               <div class="row g-2">
               <div class="col">
                 <label class="col-form-label">Filtruj</label>
               </div>
               <div class="col">
-                <input class="form-control" onChange={(event) =>handleSearch(event)}/>
+                <input class="form-control" onChange={(event) =>handleSearch(todayDate.toLocaleDateString())}/>
               </div>
             </div>
             <div class="row g-2">
               <div class="col">
-                <label class="col-form-label">Kategoria</label>
+                <label class="col-form-label">Tytuł</label>
               </div>
               <div class="col">
                 <input type="text" class="form-control" onChange={(event) => {
-                  setCategory(event.target.value);
+                  setTitle(event.target.value);
                 }}/>
               </div>
             </div>
@@ -126,7 +129,7 @@ function App(){
             </div>
             <div class="col">
               <input type="number" class="form-control" onChange={(event) => {
-                setCategory(event.target.value);
+                setTime(event.target.value);
               }}/>
             </div>
           </div>
@@ -137,7 +140,7 @@ function App(){
         <div class="col-auto">
         <div className="todoDisplay">
           <GetDay day={-1}/>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush mt-3">
               {filteredTodo.map((todo)=> {
                 return <li class="list-group-item">
                   <div class="form-check">
