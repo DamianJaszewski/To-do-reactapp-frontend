@@ -22,12 +22,4 @@ input {
 }
 
 
-input, button{
-    margin: 500px;
-    outline: blueviolet;
-}
-
-.navbar{
-    background-color: lightcoral;
-}
 

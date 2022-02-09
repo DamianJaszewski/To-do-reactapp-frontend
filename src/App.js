@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
 import Axios from "axios"; 
 import "./App.css"
+import "react-datepicker/dist/react-datepicker.css";
 
 // We use Route in order to define the different routes of our application
 import { Route, Routes } from "react-router-dom";
@@ -35,10 +37,21 @@ function GetDay(props){
 
 function App(){
 
-  const currentDate = new Date();
-  const todayDate = new Date();
+  const today = new Date()
+  const yesterday = new Date(today)
+  const tomorrow = new Date(today)
+  const dayAfterTomorrow = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2)
+
   const[listOfTodo, setListOfTodo] = useState([])
   const[filteredTodo,setFilteredTodo] = useState(listOfTodo);
+
+  const[title, setTitle] = useState('');
+  const[category, setCategory] = useState('');
+  const[time, setTime] = useState(0);
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
     Axios.get("http://localhost:3000/zadania")
@@ -53,22 +66,16 @@ function App(){
   //{todayDate.getDate() + "." + todayDate.getMonth() + "." + todayDate.getFullYear()}</div>
 
   const handleSearch = (event) => {
-    let value = event;
+    let value = event.target.value;
     let result = [];
-    console.log(event);
     result = listOfTodo.filter((data)=>{
-      console.log((new Date(data.date)).toLocaleDateString());
-      return (new Date(data.date)).toLocaleDateString().search(value) != -1;
+      return data.title.search(value) != -1;
     })
     setFilteredTodo(result);
   }
 
-  const[title, setTitle] = useState('');
-  const[category, setCategory] = useState('');
-  const[time, setTime] = useState(0);
-
   const addToList = () =>{
-    Axios.post("http://localhost:3000/zadania", {category: category, title: title, time: time})
+    Axios.post("http://localhost:3000/zadania", {category: category, title: title, time: time, date: startDate})
     refreshPage();
   }
 
@@ -100,7 +107,7 @@ function App(){
                 <label class="col-form-label">Filtruj</label>
               </div>
               <div class="col">
-                <input class="form-control" onChange={(event) =>handleSearch(todayDate.toLocaleDateString())}/>
+                <input class="form-control" onChange={(event) =>handleSearch(event)}/>
               </div>
             </div>
             <div class="row g-2">
@@ -133,6 +140,14 @@ function App(){
               }}/>
             </div>
           </div>
+          <div class="row g-2">
+            <div class="col">
+              <label class="col-form-label">Data</label>
+            </div>
+            <div class="col">
+              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+            </div>
+          </div>
           <button type="submit" class="btn btn-primary" onClick={addToList}>Dodaj zadanie</button>
           </div>
         </form>
@@ -141,7 +156,10 @@ function App(){
         <div className="todoDisplay">
           <GetDay day={-1}/>
             <ul class="list-group list-group-flush mt-3">
-              {filteredTodo.map((todo)=> {
+              {filteredTodo.filter((data)=>{
+                return (new Date(data.date))
+                .toLocaleDateString()
+                .search(yesterday.toLocaleDateString()) != -1;}).map((todo)=> {
                 return <li class="list-group-item">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
@@ -162,19 +180,23 @@ function App(){
           <div className="todoDisplay">
           <GetDay day={0}/>
             <ul class="list-group list-group-flush">
-              {filteredTodo.map((todo)=> {
-                return <li class="list-group-item">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                    {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
-                    <input type="text" placeholder={todo.title} onChange={(event) => {
-                      setNewTitle(event.target.value);
-                    }}/>
-                    {/* <button type="button" class="btn btn-info btn-sm mx-2"> {todo.date}</button> */}
-                    <button class="btn" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
-                    <button class="btn" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
-                  </div> 
-                </li>
+              {filteredTodo.filter((data)=>{
+                return (new Date(data.date))
+                .toLocaleDateString()
+                .search(today.toLocaleDateString()) != -1;})
+                .map((todo)=> {
+                  return <li class="list-group-item">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                      {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
+                      <input type="text" placeholder={todo.title} onChange={(event) => {
+                        setNewTitle(event.target.value);
+                      }}/>
+                      {/* <button type="button" class="btn btn-info btn-sm mx-2"> {todo.date}</button> */}
+                      <button class="btn" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
+                      <button class="btn" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
+                    </div> 
+                  </li>
               })}
             </ul>
           </div>
@@ -182,7 +204,11 @@ function App(){
         <div class="col-auto">
           <GetDay day={1}/>
           <ul class="list-group list-group-flush">
-              {filteredTodo.map((todo)=> {
+              {filteredTodo.filter((data)=>{
+                return (new Date(data.date))
+                .toLocaleDateString()
+                .search(tomorrow.toLocaleDateString()) != -1;})
+                .map((todo)=> {
                 return <li class="list-group-item">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
@@ -201,7 +227,10 @@ function App(){
         <div class="col-auto">
           <GetDay day={2}/>
           <ul class="list-group list-group-flush">
-              {filteredTodo.map((todo)=> {
+              {filteredTodo.filter((data)=>{
+                return (new Date(data.date))
+                .toLocaleDateString()
+                .search(dayAfterTomorrow.toLocaleDateString()) != -1;}).map((todo)=> {
                 return <li class="list-group-item">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
