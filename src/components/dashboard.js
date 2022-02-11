@@ -161,8 +161,8 @@ function Dashboard(){
                       setNewTitle(event.target.value);
                     }}/>
                     {/* <button type="button" class="btn btn-info btn-sm mx-2"> {todo.date}</button> */}
-                    <button class="btn" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
-                    <button class="btn" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-small" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-small" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
                   </div> 
                 </li>
               })}
@@ -186,8 +186,8 @@ function Dashboard(){
                         setNewTitle(event.target.value);
                       }}/>
                       {/* <button type="button" class="btn btn-info btn-sm mx-2"> {todo.date}</button> */}
-                      <button class="btn" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
-                      <button class="btn" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
+                      <button class="btn btn-small" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
+                      <button class="btn btn-small" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
                     </div> 
                   </li>
               })}
@@ -210,8 +210,8 @@ function Dashboard(){
                       setNewTitle(event.target.value);
                     }}/>
                     {/* <button type="button" class="btn btn-info btn-sm mx-2"> {todo.date}</button> */}
-                    <button class="btn" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
-                    <button class="btn" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-small" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-small" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
                   </div> 
                 </li>
               })}
@@ -232,8 +232,8 @@ function Dashboard(){
                       setNewTitle(event.target.value);
                     }}/>
                     {/* <button type="button" class="btn btn-info btn-sm mx-2"> {todo.date}</button> */}
-                    <button class="btn" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
-                    <button class="btn" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-small" onClick={()=>updateTodo(todo._id)}><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-small" onClick={()=>deleteTodo(todo._id)}><i class="fa fa-trash"></i></button>
                   </div> 
                 </li>
               })}
