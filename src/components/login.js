@@ -1,10 +1,35 @@
-import React from "react";
- 
+import React from 'react';
+
+import { GoogleLogin } from 'react-google-login';
+
+const clientId =
+  '336662310506-4igcid1j5ooangt7goli9fj5l5dpggc9.apps.googleusercontent.com';
+
 function Login() {
-    
- return (
-   <div><h1>Login</h1></div>
- )
+  const onSuccess = (res) => {
+    console.log('Login Success: currentUser:', res.profileObj);
+  };
+
+  const onFailure = (res) => {
+    console.log('Login failed: res:', res);
+    alert(
+      `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`
+    );
+  };
+
+  return (
+    <div class = "col">
+      <GoogleLogin
+        clientId={clientId}
+        buttonText="Login"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={'single_host_origin'}
+        style={{ marginTop: '100px' }}
+        isSignedIn={true}
+      />
+    </div>
+  );
 }
 
-export default Login
+export default Login;

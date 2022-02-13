@@ -10,19 +10,19 @@ function GetDay(props){
 
   switch(currentDate.getDay()){
     case 1:
-      return <legend>Poniedziałek</legend>
+      return <h1 class="display-6">Poniedziałek</h1>
     case 2:
-      return <legend>Wtorek</legend>
+      return <h1 class="display-6">Wtorek</h1>
     case 3:
-      return <legend>Środa</legend>
+      return <h1 class="display-6">Środa</h1>
     case 4:
-      return <legend>Czwartek</legend>
+      return <h1 class="display-6">Czwartek</h1>
     case 5:
-      return <legend>Piątek</legend>
+      return <h1 class="display-6">Piątek</h1>
     case 6:
-      return <legend>Sobota</legend>
+      return <h1 class="display-6">Sobota</h1>
     case 0:
-      return <legend>Niedziela</legend>
+      return <h1 class="display-6">Niedziela</h1>
     default:
       return <legend>{currentDate.getDate()}</legend>
   } 
@@ -91,9 +91,9 @@ function Dashboard(){
   return(
     <div className="Dashboard">
       <div class="row mt-5">
-        <div class="col">
+        <div class="col fs-5">
         <form>
-          <legend>Dodaj zadanie</legend>
+          <h1 class="display-6">Dodaj zadanie</h1>
             <div class="d-grid gap-3 mt-5">
               <div class="row g-2">
               <div class="col">
@@ -154,7 +154,7 @@ function Dashboard(){
                 .toLocaleDateString()
                 .search(yesterday.toLocaleDateString()) != -1;}).map((todo)=> {
                 return <li class="list-group-item">
-                  <div class="form-check">
+                  <div class="form-check fs-5">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
                     {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
                     <input type="text" placeholder={todo.title} onChange={(event) => {
@@ -179,7 +179,7 @@ function Dashboard(){
                 .search(today.toLocaleDateString()) != -1;})
                 .map((todo)=> {
                   return <li class="list-group-item">
-                    <div class="form-check">
+                    <div class="form-check fs-5">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
                       {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
                       <input type="text" placeholder={todo.title} onChange={(event) => {
@@ -203,7 +203,7 @@ function Dashboard(){
                 .search(tomorrow.toLocaleDateString()) != -1;})
                 .map((todo)=> {
                 return <li class="list-group-item">
-                  <div class="form-check">
+                  <div class="form-check fs-5">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
                     {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
                     <input type="text" placeholder={todo.title} onChange={(event) => {
@@ -225,7 +225,7 @@ function Dashboard(){
                 .toLocaleDateString()
                 .search(dayAfterTomorrow.toLocaleDateString()) != -1;}).map((todo)=> {
                 return <li class="list-group-item">
-                  <div class="form-check">
+                  <div class="form-check fs-5">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
                     {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
                     <input type="text" placeholder={todo.title} onChange={(event) => {

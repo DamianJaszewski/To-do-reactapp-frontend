@@ -35,8 +35,10 @@ input {
     vertical-align: middle;
 }
 
-legend{
+.display-6{
     text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 .container-fluid{
@@ -48,5 +50,8 @@ legend{
     padding-right: 0!important;
 }
 
+.header{
+    margin-bottom: 3rem;
+}
 
 
