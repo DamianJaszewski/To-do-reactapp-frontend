@@ -75,7 +75,12 @@ function Dashboard(){
   const[newTitle, setNewTitle] = useState('')
 
   const updateTodo = (id) =>{
-    Axios.put(`http://localhost:3000/zadania/${id}`,{ newTitle: newTitle})
+    Axios.put(`http://localhost:3000/zadania/${id}`,{newTitle: newTitle})
+    refreshPage();
+  }
+
+  const updateTodoDone = (id, completed) =>{
+    Axios.put(`http://localhost:3000/zadania/ukonczone/${id}`,{completed: completed})
     refreshPage();
   }
 
@@ -155,7 +160,7 @@ function Dashboard(){
                 .search(yesterday.toLocaleDateString()) != -1;}).map((todo)=> {
                 return <li class="list-group-item">
                   <div class="form-check fs-5">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                    <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" onChange={()=>updateTodoDone(todo._id,todo.completed)} checked={todo.completed}/>
                     {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
                     <input type="text" placeholder={todo.title} onChange={(event) => {
                       setNewTitle(event.target.value);
@@ -180,7 +185,7 @@ function Dashboard(){
                 .map((todo)=> {
                   return <li class="list-group-item">
                     <div class="form-check fs-5">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                    <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" onChange={()=>updateTodoDone(todo._id,todo.completed)} checked={todo.completed}/>
                       {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
                       <input type="text" placeholder={todo.title} onChange={(event) => {
                         setNewTitle(event.target.value);
@@ -204,7 +209,7 @@ function Dashboard(){
                 .map((todo)=> {
                 return <li class="list-group-item">
                   <div class="form-check fs-5">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                  <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" onChange={()=>updateTodoDone(todo._id,todo.completed)} checked={todo.completed}/>
                     {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
                     <input type="text" placeholder={todo.title} onChange={(event) => {
                       setNewTitle(event.target.value);
@@ -226,7 +231,7 @@ function Dashboard(){
                 .search(dayAfterTomorrow.toLocaleDateString()) != -1;}).map((todo)=> {
                 return <li class="list-group-item">
                   <div class="form-check fs-5">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                  <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" onChange={()=>updateTodoDone(todo._id,todo.completed)} checked={todo.completed}/>
                     {/* <button type="button"  class="btn btn-outline-warning btn-sm mx-2" >{todo.category}</button>  */}
                     <input type="text" placeholder={todo.title} onChange={(event) => {
                       setNewTitle(event.target.value);
