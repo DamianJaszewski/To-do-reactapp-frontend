@@ -20,7 +20,6 @@ function Login() {
       }
     })
     const data = await res.json()
-    // store returned user somehow
   }
 
   const onFailure = (res) => {
