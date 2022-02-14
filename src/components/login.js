@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { GoogleLogin } from 'react-google-login';
 
 const clientId =
@@ -9,6 +8,20 @@ function Login() {
   const onSuccess = (res) => {
     console.log('Login Success: currentUser:', res.profileObj);
   };
+
+  const handleLogin = async googleData => {
+    const res = await fetch("http://localhost:3000/zadania/auth", {
+        method: "POST",
+        body: JSON.stringify({
+        token: googleData.tokenId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await res.json()
+    // store returned user somehow
+  }
 
   const onFailure = (res) => {
     console.log('Login failed: res:', res);
@@ -20,10 +33,10 @@ function Login() {
   return (
     <div class = "col">
       <GoogleLogin
-        clientId={clientId}
-        buttonText="Login"
-        onSuccess={onSuccess}
-        onFailure={onFailure}
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+        buttonText="Zaloguj"
+        onSuccess={handleLogin}
+        onFailure={handleLogin}
         cookiePolicy={'single_host_origin'}
         style={{ marginTop: '100px' }}
         isSignedIn={true}
