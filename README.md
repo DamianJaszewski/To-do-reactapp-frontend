@@ -1,70 +1,119 @@
-# Getting Started with Create React App
+# Aplikacja Todo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Celem aplikacji jest zarządzanie swoimi zadaniami w celu poprawy produktywności. Aplikacja została stworzona w duchu minimalizmu, każdy akcja jest pod ręką.
 
-## Available Scripts
+## Spis treści
+* [Informacje ogólne](#1)
+* [Technologia](#2)
+* [Funkcjonalności](#3)
+* [Dokumentacja](#4)
+* [Przykład kodu](#5)
+* [Kontakt](#6)
 
-In the project directory, you can run:
+<a name="1"/>
 
-### `npm start`
+## Informacje ogólne
+Aplikacja pozwala na tworzenie zadań, edytowanie tytułów, usuwanie i zaznaczanie wykonanych zadań w określonym terminie.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<a name="2"/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologie
+* React.js - frontend
+* MongoDB - database
+* Express.js, Node.js  - backend
+* CSS Bootstrap
+* Google API -> Google OAuth 2.0 
 
-### `npm test`
+<a name="3"/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Funkcjonalności
+1) CRUD dla zadań:
+* wyświetlanie zadań dla wybranego dnia
+* dodawanie zadania wraz z wyborem daty
+* edytowanie tytułu 
+* zaznaczanie wykonanego zadania
+* usuwanie zadania
+* flitrowanie nazw zadań
+2) Logowanie do aplikacji z wykorzystaniem api google
 
-### `npm run build`
+<a name="4"/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Dokumentacja
+![Strona główna](./img/Stronaglowna.png)
+![Logowanie](./img/LogowanieGoogle.png)
+![Wybranie daty](./img/datapicker.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<a name="5"/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Przykład kodu
 
-### `npm run eject`
+*Wykorzystanie placeholdera*
+```js
+<input type="text" placeholder={todo.title} onChange={(event) => {
+  setNewTitle(event.target.value);
+}}/>
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+*Model zadania*
+```js
+const todoSchema = mongoose.Schema({
+  _id: mongoose.Types.ObjectId,
+  userId:Number,
+  category: String,
+  title: String,
+  date: Date,
+  time: Number,
+  completed: Boolean
+});
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+*Zmiana statusu zadania*
+```js
+const updateTodoDone = (id, completed) =>{
+    Axios.put(`http://localhost:3000/zadania/ukonczone/${id}`,{completed: completed})
+    refreshPage();
+  }
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```js
+exports.todos_put_change_done = (req, res, next) => {
+  const id = req.params.id;
+  const completed = req.body.completed;
+  Todo.findByIdAndUpdate(
+    id, 
+    {
+        "completed": ((completed == true) ? false : true),
+    },
+    {new:true}
+    ).exec()
+    .then(result => {
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+      res.status(200).json({
+          wiadomość: "Zmiana zadania o numerze:" + id,
+          info: result
+       });
 
-## Learn More
+    })
+    .catch(err => res.status(500).json({wiadomość:err}));
+}
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+*Filtrowanie*
+```js
+ const[filteredTodo,setFilteredTodo] = useState(listOfTodo);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  const handleSearch = (event) => {
+    let value = event.target.value;
+    let result = [];
+    result = listOfTodo.filter((data)=>{
+      return data.title.search(value) != -1;
+    })
+    setFilteredTodo(result);
+  }
+```
 
-### Code Splitting
+<a name="6"/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Kontakt
+Aplikację stworzyli:
+Natalia Gościnna & Damian Jaszewski
