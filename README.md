@@ -15,6 +15,8 @@
 ## Informacje ogólne
 Aplikacja pozwala na tworzenie zadań, edytowanie tytułów, usuwanie i zaznaczanie wykonanych zadań w określonym terminie.
 
+[Backend aplikacji](https://github.com/DamianJaszewski/To-do-reactapp-backend/tree/master)
+
 <a name="2"/>
 
 ## Technologie
